@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PlacesApiClient } from '../api/placesApiClient';
 import { Feature, PlacesResponse } from '../interfaces/places';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class PlacesService {
     return !!this. userLocation;
   }
 
-  constructor(private http: HttpClient) { this.getUserLocation() }
+  constructor(private placesApi: PlacesApiClient ) { this.getUserLocation() }
 
   public async getUserLocation(): Promise<[number, number]> {
     return new Promise( (resolve, reject) => {
@@ -34,10 +34,15 @@ export class PlacesService {
   }
 
   getPlacesByQuery(query: string = '') {
+    if(!this.userLocation) throw Error('We could not find user location')
 
     this.loadPlaces = true;
 
-    this.http.get<PlacesResponse>(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?limit=1&types=place%2Cpostcode%2Caddress&language=en&access_token=pk.eyJ1IjoiaXZhYW4tbGctMTk5MiIsImEiOiJjbDdpYnp0eTIwNWxpM25xbW0yZmkxYWFpIn0.XEhoLzDFLhbG7pnt7PEARQ`)
+    this.placesApi.get<PlacesResponse>(`/${query}.json`, {
+      params: {
+        proximity: this.userLocation.join(',')
+      }
+    })
     .subscribe(resp => {
       console.log(resp.features)
       this.loadPlaces = false;
