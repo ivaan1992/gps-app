@@ -22,7 +22,7 @@ export class MapViewComponent implements AfterViewInit {
 
     const map = new Map({
       container: this.mapDivElement.nativeElement,
-      style: 'mapbox://styles/mapbox/dark-v10',
+      style: 'mapbox://styles/mapbox/light-v10',
       center: this.placesService.userLocation,
       zoom: 14,
     });
