@@ -1,15 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Feature } from '../../interfaces/places';
+import { MapService, PlacesService } from '../../services';
 
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.css']
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent {
+  public selectedId: string = '';
 
-  constructor() { }
+  constructor(
+    private placesService: PlacesService,
+    private mapService: MapService
+  ) { }
 
-  ngOnInit(): void {
+  get loadPlaces(): boolean {
+    return this.placesService.loadPlaces;
+  }
+
+  get places(): Feature[] {
+    return this.placesService.places
+  }
+
+  flyTo(place: Feature) {
+    this.selectedId = place.id;
+    const [lng, lat] = place.center;
+    this.mapService.flyTo([lng, lat]);
   }
 
 }

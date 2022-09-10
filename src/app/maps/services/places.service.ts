@@ -34,6 +34,12 @@ export class PlacesService {
   }
 
   getPlacesByQuery(query: string = '') {
+    if(query.length === 0) {
+      this.loadPlaces = false;
+      this.places = [];
+      return;
+    }
+
     if(!this.userLocation) throw Error('We could not find user location')
 
     this.loadPlaces = true;
@@ -44,7 +50,6 @@ export class PlacesService {
       }
     })
     .subscribe(resp => {
-      console.log(resp.features)
       this.loadPlaces = false;
       this.places = resp.features;
     });

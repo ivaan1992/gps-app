@@ -6,7 +6,8 @@ import { LngLatLike, Map } from 'mapbox-gl';
 })
 export class MapService {
 
-  private map: Map | undefined
+  private map?: Map
+
 
   get isMapReady() {
     return !!this.map;
@@ -20,7 +21,7 @@ export class MapService {
     if(!this.isMapReady) throw Error ('Map is not initialized');
 
     this.map?.flyTo({
-      zoom: 14,
+      zoom: 15,
       center: coords
     });
   }
