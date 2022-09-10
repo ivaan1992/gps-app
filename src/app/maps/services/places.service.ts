@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PlacesApiClient } from '../api/placesApiClient';
 import { Feature, PlacesResponse } from '../interfaces/places';
+import { MapService } from './map.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,10 @@ export class PlacesService {
     return !!this. userLocation;
   }
 
-  constructor(private placesApi: PlacesApiClient ) { this.getUserLocation() }
+  constructor(
+    private placesApi: PlacesApiClient,
+    private mapService: MapService
+    ) { this.getUserLocation() }
 
   public async getUserLocation(): Promise<[number, number]> {
     return new Promise( (resolve, reject) => {
@@ -52,6 +56,7 @@ export class PlacesService {
     .subscribe(resp => {
       this.loadPlaces = false;
       this.places = resp.features;
+      this.mapService.createMarkersFromPlaces(this.places);
     });
   }
 }
