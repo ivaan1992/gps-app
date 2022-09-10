@@ -29,4 +29,12 @@ export class SearchResultsComponent {
     this.mapService.flyTo([lng, lat]);
   }
 
+  getDirections(place: Feature) {
+    if(!this.placesService.userLocation) throw Error('We could not find user location');
+
+    const start = this.placesService.userLocation;
+    const end = place.center as [number, number];
+    this.mapService.getRouterBetweenPoints(start, end);
+  }
+
 }
