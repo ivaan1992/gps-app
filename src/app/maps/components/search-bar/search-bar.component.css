@@ -1,0 +1,22 @@
+.search-container {
+  width: 15.625rem;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #fff;
+  padding: 5px;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+input {
+font-style: italic;
+font-size: 1rem;
+font-weight: bold;
+}
+
+input::placeholder {
+  color: rgb(114, 110, 110);
+}
+
