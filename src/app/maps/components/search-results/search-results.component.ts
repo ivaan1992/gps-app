@@ -32,6 +32,8 @@ export class SearchResultsComponent {
   getDirections(place: Feature) {
     if(!this.placesService.userLocation) throw Error('We could not find user location');
 
+    this.placesService.deletePlaces();
+
     const start = this.placesService.userLocation;
     const end = place.center as [number, number];
     this.mapService.getRouterBetweenPoints(start, end);
